@@ -20,7 +20,7 @@ def round_robin_sched(processes, time_quantum):
         current_process = queue.pop(0)
         current_time = max(current_time, current_process.arrival_time)
 
-        if hasattr(current_process, 'remaining_time'):  # Check if the attribute already exists
+        if hasattr(current_process, 'remaining_time'):  
             if current_process.remaining_time <= time_quantum:
                 current_time += current_process.remaining_time
                 current_process.remaining_time = 0
@@ -29,7 +29,7 @@ def round_robin_sched(processes, time_quantum):
                 current_process.remaining_time -= time_quantum
                 queue.append(current_process)
         else:
-            if current_process.burst_time <= time_quantum:  # Initialize remaining_time if not present
+            if current_process.burst_time <= time_quantum:  
                 current_time += current_process.burst_time
                 current_process.remaining_time = 0
             else:
@@ -51,7 +51,7 @@ def shortest_job_first_sched(processes):
     current_time = 0
 
     while queue:
-        queue.sort(key=lambda x: (x.burst_time, x.arrival_time))  # Sort the queue based on burst time (shortest job first)
+        queue.sort(key=lambda x: (x.burst_time, x.arrival_time))  
         current_process = queue.pop(0)
 
         current_time = max(current_time, current_process.arrival_time)
@@ -123,7 +123,7 @@ def calculate_metrics(processes):
 
 
 def main():
-    # Create a list of Process objects
+   
     processes = [
         Process(1, 0, 8, 3),
         Process(2, 1, 6, 1),
@@ -131,7 +131,6 @@ def main():
         Process(4, 3, 5, 4)
     ]
 
-    # Perform scheduling using the defined functions
     round_robin_sched(processes, 2)
     shortest_job_first_sched(processes)
     pre_emptive_priority(processes)
